@@ -9,24 +9,35 @@ def video_Info(yt):
     print("Total Views: ", yt.views)
     print("Is Age Restricted: ", yt.age_restricted)
     print("Thumbnail Url: ", yt.thumbnail_url)
-    print(yt.description)
 
 
 def download_Video(yt):
-    my_streams = yt.streams.filter(file_extension='mp4',only_video= True)
-    for streams in my_streams:
-        print(f"Video Tag : {streams.itag} Resolution : {streams.resolution}")
+    # my_streams = yt.streams.filter(file_extension='mp4',only_video= True)
+    # for streams in my_streams:
+    #     print(f"Video Tag : {streams.itag} Resolution : {streams.resolution}")
 
-    input_itag = input("Enter itag Value: ")
+    # input_itag = input("Enter itag Value: ")
 
-    video = yt.streams.get_by_itag(input_itag)
+    # video = yt.streams.get_by_itag(input_itag)
 
-    video.download()
-    print("Video is Downloading as ", yt.title , ".mp4")
+    # video.download()
+    # print("Video is Downloading as ", yt.title , ".mp4")
+    
+    #Getting the highest resolution possible
+    video_Info(yt)
+    ys = yt.streams.get_highest_resolution()
+
+    #Starting download
+    print("Downloading...")
+    ys.download()
+    print("Download completed!!")
 
 
 
 def download_Audio(yt):
+    
+    video_Info(yt)
+
     my_streams = yt.streams.filter(only_audio= True)
     for streams in my_streams:
         print(f"Audio Tag : {streams.itag} Resolution : {streams.abr}")
